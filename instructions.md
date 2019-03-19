@@ -2,6 +2,8 @@
 title: GrowBot Installation
 ---
 
+# GrowBot Installation
+
 **Prerequisites:** Linux knowledge, a Virtual Machine running Debian 9.8 (stretch)
 
 These instructions will walk you through:
@@ -26,10 +28,48 @@ Please refer to GitHub Pages or the Jekyll website for help with setting up `gro
 
 ## Set up the web server
 
+1. Run `apt install -y nginx`
+1. Create the `growbot` nginx config file inside `/etc/nginx/sites-available`
+  1. `$ vim /etc/nginx/site-available/growbot`
+  1. Paste the following content:
+      ```nginx
+      server {
+              listen 80;
+
+              server_name app.growbot.tardis.ed.ac.uk;
+
+              location / {
+                      root /srv/growbot;
+              }
+      }
+
+      server {
+              listen 80;
+
+              server_name api.growbot.tardis.ed.ac.uk;
+
+              location / {
+                      proxy_pass http://localhost:8080;
+              }
+
+              location /stream {
+                      proxy_pass http://localhost:8080;
+                      proxy_set_header Upgrade $http_upgrade;
+                      proxy_set_header Connection $http_connection;
+                      proxy_set_header Origin '';
+                      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              }
+      }
+      ```
+
 ## Get the webapp online
 
 ## Set up the database
 
 ## Deploy the API
+
+## Set up HTTPS
+
+
 
 ## Verify everything works
