@@ -17,4 +17,3 @@ $ git clone https://github.com/compsoc-edinburgh/htb19-site
 $ cd htb19-site
 $ jekyll serve
 ```
-
