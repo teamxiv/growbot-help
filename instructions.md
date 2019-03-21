@@ -100,7 +100,7 @@ These instructions assume that you already have DNS settings fully configured.
 
 1. On your local machine, make sure Go is set up (you should have `GOROOT` and `GOPATH` set up appropriately).
 
-    Don't have Go? Please follow the [Go installation instructions].
+    Don't have Go? Please follow the [Go installation instructions](https://golang.org/doc/install).
 
     You should also add `$GOPATH/bin` to your `$PATH`. This is so that any self-built binaries (such as [`goimports`](https://godoc.org/golang.org/x/tools/cmd/goimports)) are easy to run.
 
