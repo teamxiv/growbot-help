@@ -15,11 +15,6 @@ These instructions will walk you through:
 - Setting up PostgreSQL
 - Building and deploying `growbot-api`
 
-These instructions will _not_ walk you through setting up growbot-landing,
-which should work out of the box with GitHub Pages.
-
-Please refer to GitHub Pages or the Jekyll website for help with setting up `growbot-landing`.
-
 ## Prepare your virtual machine
 
 1. Run `apt update`
