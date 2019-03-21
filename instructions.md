@@ -23,11 +23,13 @@ These instructions assume your virtual machine is running Debian 9.
 1. Install vim and git using `$ apt install -y make vim git`
 1. Fix vim by following the [_vim-sensible instructions_](https://github.com/tpope/vim-sensible)
 
+These instructions assume that you already have DNS settings fully configured.
+
 ## Set up the web server
 
 1. Run `$ apt install -y nginx`
 1. Create the `growbot` nginx config file inside `/etc/nginx/sites-available`
-  1. `$ vim /etc/nginx/site-available/growbot`
+  1. `$ vim /etc/nginx/sites-available/growbot`
   1. Paste the following content:
       ```nginx
       server {
@@ -58,10 +60,22 @@ These instructions assume your virtual machine is running Debian 9.
               }
       }
       ```
+1. Create a folder to store the GrowBot website, `mkdir /srv/growbot`
+1. Create a test file containing `<h1>Hello world</h1>` at `/srv/growbot/index.html`
+1. Navigate to the enabled sites directory, `cd /etc/nginx/sites-enabled`
+1. Create a symlink to the growbot config, and rename it
+  1. `ln -s ../sites-available/growbot`
+  1. `mv growbot growbot.conf`
 1. Run `$ nginx -s reload` to reload the nginx configuration
+1. From your local machine, verify nginx is set up correctly by checking that `curl growbot.tardis.ed.ac.uk` displays `<h1>Hello world!</h1>`
 
 ## Get the webapp online
 
+1. On your local machine, clone the website, `git clone https://github.com/teamxiv/growbot-site.git`
+1. `$ cd growbot-site`
+1. Install dependencies, `npm install`
+1. Create an optimised production build of the website, `npm run build` 
+1. Upload the website using `scp -r build/* remote:/srv/growbot/`. Replace `remote` with the details of your remote server.
 
 ## Set up the database
 
@@ -100,10 +114,12 @@ These instructions assume your virtual machine is running Debian 9.
 
 ## Set up HTTPS
 
+HTTPS is required for service workers and other web features (like camera access) to work correctly. You **must** set up HTTPS.
 
+1. Follow the installation instructions here: https://certbot.eff.org/lets-encrypt/debianstretch-nginx
 
 ## Verify everything works
 
-1. `https://api.growbot.tardis.ed.ac.uk` should say "404 Not Found" and nothing else. HTTPS should work correctly.
-1. `https://growbot.tardis.ed.ac.uk` should have the landing page. Click `Register` and test out registration.
+1. In your browser, `https://api.growbot.tardis.ed.ac.uk` should show a HTML webpage containing exactly "404 page not found" in the source, and nothing else. Your browser should not complain about HTTPS.
+1. In your browser, `https://growbot.tardis.ed.ac.uk` should have the landing page. Click `Register` and test out registration. Your browser should not complain about HTTPS.
 1. If registration works correctly and you are logged in, everything is working correctly.
