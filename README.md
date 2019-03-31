@@ -1,7 +1,3 @@
----
-title: GrowBot Installation
----
-
 # GrowBot Installation
 
 **Prerequisites:** Linux knowledge, a Virtual Machine running Debian 9.8 (stretch)
